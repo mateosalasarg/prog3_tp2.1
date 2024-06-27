@@ -21,6 +21,17 @@ class Reservation {
     get info(){
         return `[Fecha y hora : ${this.date.toLocaleString()} - Cliente : ${this.customer.name} - Comensales : ${this.guests}]`;
     }
+    static validateReservation(date,guests){
+        const currentDate = new Date();
+        const reservationDate = new Date(date);
+        if(reservationDate < currentDate){
+            return false;
+        }
+        if(guests <= 0){
+            return false;
+        }
+        return true;
+    }
 }
 
 class Restaurant {
