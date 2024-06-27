@@ -13,7 +13,21 @@ class Sensor {
         this.value = value;
         this.updated_at = new Date().toString();
     }
-    Type(type){}
+    /*Los valores para "type" permitidos son:
+    "temperature", "humidity" y "pressure".
+    */
+    Type(type){
+        const Types = ["temperature", "humidity", "pressure"];
+        Types.forEach(T);
+        if(type === T){
+            this.type = type;
+            console.log("El tipo ha sido ingresado correctamente");
+            this.type = type;
+        }
+        else{
+            console.log("El ingreso ha fallado");
+        }
+    }
 }
 
 class SensorManager {
@@ -49,7 +63,13 @@ class SensorManager {
         }
     }
 
-    async loadSensors(url) {}
+    async loadSensors(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        data.forEach(sensor);
+        const sensor = new Sensor();
+        this.addSensor(sensor);
+    }
 
     render() {
         const container = document.getElementById("sensor-container");
