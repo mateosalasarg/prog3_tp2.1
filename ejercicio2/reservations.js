@@ -1,4 +1,16 @@
-class Customer {}
+//la clase debe tener las siguientes propiedades
+class Customer {
+    constructor(id,name,email){
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+    //se debe implementar una propiedad "info"
+    get info(){
+        const salida = `[Nombre: ${this.name} - Email: ${this.email}]`;
+        return salida;
+    }
+}
 
 class Reservation {}
 
