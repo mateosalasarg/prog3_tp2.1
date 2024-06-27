@@ -1,4 +1,20 @@
-class Sensor {}
+class Sensor {
+    //la clase debe tener las siguientes propiedades.
+    constructor(id, name, type, value, unit, updated_at){
+        this.id = id;
+        this.name = name;
+        this.Type(type);
+        this.value = value;
+        this.unit = unit;
+        this.updated_at = updated_at;
+    }
+    //permite actualizar el valor del sensor y la fecha de actualización.
+    set updateValue(value){
+        this.value = value;
+        this.updated_at = new Date().toString();
+    }
+    Type(type){}
+}
 
 class SensorManager {
     constructor() {
