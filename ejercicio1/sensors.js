@@ -64,11 +64,15 @@ class SensorManager {
     }
 
     async loadSensors(url) {
-        const response = await fetch(url);
-        const data = await response.json();
-        data.forEach(sensor);
-        const sensor = new Sensor();
-        this.addSensor(sensor);
+        //aplicando un encadenamiento de promesas mejor
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {data.forEach(sData => {
+            const sen = new Sensor(sData.id,sData.name,sData.type,sData.value,sData.unit,sData.updated_at);
+            this.addSensor(sen);
+        })})
+        //no debe retornar nada, pero debe invocar al metodo "render"
+        .finally(() => {this.render()});
     }
 
     render() {
