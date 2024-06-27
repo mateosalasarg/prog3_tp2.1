@@ -6,9 +6,15 @@ class Currency {
 }
 
 class CurrencyConverter {
-    constructor() {}
-
-    getCurrencies(apiUrl) {}
+    //el constructor recibe un parametro "apiUrl" que corresponde a la URL
+    constructor(apiUrl) {
+        this.apiUrl = apiUrl;
+        this.currencies = [];
+    }
+    //El metodo no recibe parametros
+    async getCurrencies() {
+        //sentencia try/catch
+    }
 
     convertCurrency(amount, fromCurrency, toCurrency) {}
 }
