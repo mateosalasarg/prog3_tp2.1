@@ -31,7 +31,9 @@ class Card {
         const cardElement = this.element.querySelector(".card");
         cardElement.classList.remove("flipped");
     }
-    toggleFlip(){}
+    toggleFlip(){
+        this.isFlipped ? this.#flip() : this.#unflip();
+    }
     matches(otherCard){
         return (this.name === otherCard.name);
     }
@@ -78,10 +80,23 @@ class Board {
             this.onCardClick(card);
         }
     }
-    shuffleCards(){}
-    reset(){}
-    flipDownAllCards(){}
-    reset(){}
+    shuffleCards(){
+        let ind = this.cards.length - 1;
+        for(ind; ind > 0; ind--){
+            const j = Math.floor(Math.random() * (ind + 1));
+            this.cards[ind] = this.cards[j];
+            this.cards[j] = this.cards[ind];
+        }
+    }
+    reset(){
+        this.shuffleCards();
+        this.flipDownAllCards();
+        this.render();
+    }
+    flipDownAllCards(){
+        this.cards.forEach((card) => {if (card.isFlipped) {card.toggleFlip();}
+        });
+    }
 }
 
 class MemoryGame {
@@ -99,7 +114,19 @@ class MemoryGame {
         this.board.onCardClick = this.#handleCardClick.bind(this);
         this.board.reset();
     }
-    checkForMatch(){}
+    checkForMatch(){
+        const [firstCard, secondCard] = this.flippedCards;
+        if (firstCard.matches(secondCard)) {
+            this.matchedCards.push(firstCard, secondCard);
+            this.flippedCards = [];
+        
+        }else {
+            setTimeout(() => {firstCard.toggleFlip();
+                secondCard.toggleFlip();
+                this.flippedCards = [];
+            }, this.flipDuration);
+        }
+    }
 
     #handleCardClick(card) {
         if (this.flippedCards.length < 2 && !card.isFlipped) {
@@ -111,7 +138,11 @@ class MemoryGame {
             }
         }
     }
-    resetGame(){}
+    resetGame(){
+        this.flippedCards = [];
+        this.matchedCards = [];
+        this.board.reset();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
