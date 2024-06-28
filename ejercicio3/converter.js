@@ -25,7 +25,7 @@ class CurrencyConverter {
             return amount;
         }
         try {
-            const response = fetch(`${this.apiUrl}`);
+            const response = await fetch(`${this.apiUrl}`);
             if(response.ok){
                 const data = (await response).json();
                 return amount * data.rates[toCurrency.code];
