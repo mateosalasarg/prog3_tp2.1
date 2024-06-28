@@ -20,8 +20,8 @@ class Card {
           </div>
       `;
         return cardElement;
+    
     }
-
     #flip() {
         const cardElement = this.element.querySelector(".card");
         cardElement.classList.add("flipped");
@@ -30,6 +30,10 @@ class Card {
     #unflip() {
         const cardElement = this.element.querySelector(".card");
         cardElement.classList.remove("flipped");
+    }
+    toggleFlip(){}
+    matches(otherCard){
+        return (this.name === otherCard.name);
     }
 }
 
@@ -74,6 +78,10 @@ class Board {
             this.onCardClick(card);
         }
     }
+    shuffleCards(){}
+    reset(){}
+    flipDownAllCards(){}
+    reset(){}
 }
 
 class MemoryGame {
@@ -91,6 +99,7 @@ class MemoryGame {
         this.board.onCardClick = this.#handleCardClick.bind(this);
         this.board.reset();
     }
+    checkForMatch(){}
 
     #handleCardClick(card) {
         if (this.flippedCards.length < 2 && !card.isFlipped) {
@@ -102,6 +111,7 @@ class MemoryGame {
             }
         }
     }
+    resetGame(){}
 }
 
 document.addEventListener("DOMContentLoaded", () => {
