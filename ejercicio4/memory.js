@@ -31,9 +31,12 @@ class Card {
         const cardElement = this.element.querySelector(".card");
         cardElement.classList.remove("flipped");
     }
+    //cambia el estado del volteo de la carta en funcion de su estado actual
     toggleFlip(){
+        this.isFlipped = !this.isFlipped;
         this.isFlipped ? this.#flip() : this.#unflip();
     }
+    //verfica si la carta actual coincide con otra carta
     matches(otherCard){
         return (this.name === otherCard.name);
     }
@@ -80,6 +83,7 @@ class Board {
             this.onCardClick(card);
         }
     }
+    //mezcla las cartas del tablero
     shuffleCards(){
         let ind = this.cards.length - 1;
         for(ind; ind > 0; ind--){
@@ -88,11 +92,13 @@ class Board {
             this.cards[j] = this.cards[ind];
         }
     }
+    //reinicia el tablero
     reset(){
         this.shuffleCards();
         this.flipDownAllCards();
         this.render();
     }
+    //posiciona todas las cartas en su estado inicial
     flipDownAllCards(){
         this.cards.forEach((card) => {if (card.isFlipped) {card.toggleFlip();}
         });
@@ -114,6 +120,8 @@ class MemoryGame {
         this.board.onCardClick = this.#handleCardClick.bind(this);
         this.board.reset();
     }
+    /*verifica si las cartas volteadas coinciden. En caso de coincidir, 
+      las cartas deben ser añadidas al conjunto de cartas emparejadas*/
     checkForMatch(){
         const [firstCard, secondCard] = this.flippedCards;
         if (firstCard.matches(secondCard)) {
@@ -138,6 +146,7 @@ class MemoryGame {
             }
         }
     }
+    //reinicia el juego
     resetGame(){
         this.flippedCards = [];
         this.matchedCards = [];

@@ -1,4 +1,4 @@
-//la clase debe tener las siguientes propiedades
+//la clase debe tener las siguientes propiedades para que permita representar un cliente
 class Customer {
     constructor(id,name,email){
         this.id = id;
@@ -10,7 +10,7 @@ class Customer {
         return `[Nombre : ${this.name} - Email : ${this.email}]`;
     }
 }
-
+//la clase debe tener las siguientes propiedades para que permita representar una reserva
 class Reservation {
     constructor(id,customer,date,guests){
         this.id = id;
@@ -18,15 +18,19 @@ class Reservation {
         this.date = new Date(date);
         this.guests = guests;
     }
+    //se debe implementar una propiedad "info"
     get info(){
         return `[Fecha y hora : ${this.date.toLocaleString()} - Cliente : ${this.customer.name} - Comensales : ${this.guests}]`;
     }
+    //Se debe implementar un método estático "validateReseration"
     static validateReservation(date,guests){
         const currentDate = new Date();
         const reservationDate = new Date(date);
+        //verifica si la fecha de la reserva es anterior a la fecha actual
         if(reservationDate < currentDate){
             return false;
         }
+        //verifica si la cantidad de comensales es menor o igual a 0
         if(guests <= 0){
             return false;
         }

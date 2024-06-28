@@ -7,29 +7,35 @@ class Currency {
 
 class CurrencyConverter {
     constructor(){
+        //url base
         this.apiUrl = "https://api.frankfurter.app";
+        //el atributo currencies tiene que inicializarse con un arreglo vacio
         this.currencies = [];
     
     }
     //El metodo no recibe parametros
     getCurrencies() {
+        //realiza la peticion al endpoint
         return fetch(`${this.apiUrl}/currencies`)
             .then(response => response.json())
+            //obtiene la lista de codigo de monedas disponibles
             .then(data => {for(const code in data){
+                //almacena las monedas obtenidas
                 this.currencies.push(new Currency(code,data[code]));
             }});
     }
-
+    //aplicando el async/await
     async convertCurrency(amount, fromCurrency, toCurrency) {
         if(fromCurrency.code === toCurrency.code){
             return amount;
         }
+        //si la moneda son diferentes, debe realizar una peticion y retornar el monto convertido
         try {
-            const response = await fetch(`${this.apiUrl}`);
+            const response = await fetch(`${this.apiUrl}`); //??
             if(response.ok){
                 const data = (await response).json();
                 return amount * data.rates[toCurrency.code];
-            }
+            } 
         } catch (error) {
             return null;
         }
