@@ -6,17 +6,34 @@ class Currency {
 }
 
 class CurrencyConverter {
-    //el constructor recibe un parametro "apiUrl" que corresponde a la URL
-    constructor(apiUrl) {
-        this.apiUrl = apiUrl;
+    constructor(){
+        this.apiUrl = "https://api.frankfurter.app";
         this.currencies = [];
+    
     }
     //El metodo no recibe parametros
-    async getCurrencies() {
-        //sentencia try/catch
+    getCurrencies() {
+        return fetch(`${this.apiUrl}/currencies`)
+            .then(response => response.json())
+            .then(data => {for(const code in data){
+                this.currencies.push(new Currency(code,data[code]));
+            }});
     }
 
-    convertCurrency(amount, fromCurrency, toCurrency) {}
+    async convertCurrency(amount, fromCurrency, toCurrency) {
+        if(fromCurrency.code === toCurrency.code){
+            return amount;
+        }
+        try {
+            const response = fetch(`${this.apiUrl}`);
+            if(response.ok){
+                const data = (await response).json();
+                return amount * data.rates[toCurrency.code];
+            }
+        } catch (error) {
+            return null;
+        }
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
